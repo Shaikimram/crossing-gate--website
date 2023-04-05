@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</title>
+	<style>
+		body {
+			background-image: url('mohan.png');
+			background-size: cover;
+			background-color: skyblue; /* Sky blue background color */
+		}
+		h1, h2, p {
+			display: none;
+			text-align: center;
+			color: navy; /* Red text color */
+		}
+	</style>
+</head>
+<body>
+	<h1>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</h1>
+
+	<h2>Madhura Nagrar Crossing point</h2>
+	<p><span id="sensor1"></span></p>
+
+	<h2>Gunadala Crossing Point</h2>
+	<p><span id="sensor2"></span></p>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			setTimeout(function() {
+				$('h1, h2, p').show();
+			}, 2000);
+
+			// Sensor 1 data retrieval
+			setTimeout(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
+					$("#sensor1").text("The closing time of the crossing gate is: " + data.feeds[0].field1 + ":" + data.feeds[0].field2);
+					setTimeout(function(){
+						$("#sensor1").text("");
+					}, 5000);
+					setTimeout(function(){
+						$("#sensor1").text("Other statement after delay for sensor1");
+					}, 6000);
+				});
+			}, 3000);
+
+			// Sensor 2 data retrieval
+			setTimeout(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
+					$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field4);
+					setTimeout(function(){
+						$("#sensor2").text("");
+					}, 5000);
+					setTimeout(function(){
+						$("#sensor2").text("Other statement after delay for sensor2");
+					}, 6000);
+				});
+			}, 3000);
+		});
+	</script>
+</body>
+</html>
