@@ -18,7 +18,7 @@
 <body>
 	<h1>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</h1>
 
-	<h2>Madhura Nagrar Crossing point</h2>
+	<h2>Madhura Nagar Crossing point</h2>
 	<p><span id="sensor1"></span></p>
 
 	<h2>Gunadala Crossing Point</h2>
@@ -29,7 +29,7 @@
 		$(document).ready(function(){
 			setTimeout(function() {
 				$('h1, h2, p').show();
-			}, 2000);
+			}, 3000);
 
 			// Sensor 1 data retrieval
 			setTimeout(function(){
@@ -37,10 +37,10 @@
 					$("#sensor1").text("The closing time of the crossing gate is: " + data.feeds[0].field1 + ":" + data.feeds[0].field2);
 					setTimeout(function(){
 						$("#sensor1").text("");
-					}, 5000);
+					}, 60000);
 					setTimeout(function(){
-						$("#sensor1").text("Other statement after delay for sensor1");
-					}, 6000);
+						$("#sensor1").text("NO TRAIN IS AVAILABLE NEAR CROSSING GATE");
+					}, 60000);
 				});
 			}, 3000);
 
@@ -50,10 +50,10 @@
 					$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field4);
 					setTimeout(function(){
 						$("#sensor2").text("");
-					}, 5000);
+					}, 60000);
 					setTimeout(function(){
-						$("#sensor2").text("Other statement after delay for sensor2");
-					}, 6000);
+						$("#sensor2").text("NO TRAIN IS AVALABLE NEAR CROSSING GATE");
+					}, 60000);
 				});
 			}, 3000);
 		});
