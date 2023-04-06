@@ -32,7 +32,7 @@
 			}, 3000);
 
 			// Sensor 1 data retrieval
-			setTimeout(function(){
+			setInterval(function(){
 				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
 						if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
 						$("#sensor1").text("No train is available");
@@ -50,13 +50,13 @@
 			}, 3000);
 
 			// Sensor 2 data retrieval
-			setTimeout(function(){
+			setInterval(function(){
 				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
 					if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
 						$("#sensor2").text("No train is available");
 					}
 					else{
-						$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field4);
+						$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field);
 					}
 					setTimeout(function(){
 						$("#sensor2").text("");
@@ -67,6 +67,11 @@
 				});
 			}, 3000);
 		});
+
+		// Refresh page every 2 minutes
+		setInterval(function() {
+			location.reload();
+		}, 120000);
 	</script>
 </body>
 </html>
