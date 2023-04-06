@@ -34,7 +34,12 @@
 			// Sensor 1 data retrieval
 			setTimeout(function(){
 				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
-					$("#sensor1").text("The closing time of the crossing gate is: " + data.feeds[0].field1 + ":" + data.feeds[0].field2);
+						if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
+						$("#sensor2").text("No train is available");
+					}
+					else{
+						$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field1 + ":" + data.feeds[0].field2);
+					}
 					setTimeout(function(){
 						$("#sensor1").text("");
 					}, 60000);
@@ -46,8 +51,13 @@
 
 			// Sensor 2 data retrieval
 			setTimeout(function(){
-				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
-					$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field4);
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
+					if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
+						$("#sensor2").text("No train is available");
+					}
+					else{
+						$("#sensor2").text("The closing time of the crossing gate is: " + data.feeds[0].field3 + ":" + data.feeds[0].field);
+					}
 					setTimeout(function(){
 						$("#sensor2").text("");
 					}, 60000);
