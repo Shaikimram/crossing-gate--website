@@ -1,103 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</title>
-    <style>
-        body {
-            background-image: url('mohan.png');
-            background-size: cover;
-            background-color: skyblue; /* Sky blue background color */
-        }
-        h1, h2, p {
-            display: none;
-            text-align: center;
-            color: navy; 
-        }
-        #sensor1, #sensor2 {
-            background-color: yellow;
-        }
-    </style>
+	<title>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</title>
+	<style>
+		body {
+			background-image: url('mohan.png');
+			background-size: cover;
+			background-color: skyblue; /* Sky blue background color */
+		}
+		h1, h2, p {
+			display: none;
+			text-align: center;
+			color: navy; 
+		} 
+		.box {
+			display: none;
+			margin: 20px auto;
+			padding: 10px;
+			width: 300px;
+			background-color: white;
+			border: 2px solid navy;
+			border-radius: 5px;
+			text-align: center;
+			color: navy;
+		}
+
+	</style>
 </head>
 <body>
-    <h1>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</h1>
+	<h1>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</h1>
+   
 
-    <h2>Madhura Nagar Crossing point</h2>
-    <p><span id="sensor1"></span></p>
+	<h2>Madhura Nagar Crossing point</h2>
+   <div class="box"><span id="sensor1"></span></div>
 
-    <h2>Gunadala Crossing Point</h2>
-    <p><span id="sensor2"></span></p>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            var prevSensor1Val = "";
-            var prevSensor2Val = "";
-            setTimeout(function() {
-                $('h1, h2, p').show();
-            }, 3000);
+	<h2>Gunadala Crossing Point</h2>
+	<div class="box"><span id="sensor2"></span></div>
 
-            // Sensor 1 data retrieval
-            setInterval(function(){
-                $.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
-                    if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
-                        if(prevSensor1Val === ""){
-                            $("#sensor1").text("No train is available");
-                        }
-                        else{
-                            $("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
-                        }
-                    }
-                    else{
-                        var currVal = data.feeds[0].field1 + ":" + data.feeds[0].field2;
-                        $("#sensor1").text("The closing time of the crossing gate is: " + currVal);
-                        prevSensor1Val = currVal;
-                    }
-                    setTimeout(function(){
-                        $("#sensor1").text("");
-                    }, 60000);
-                    setTimeout(function(){
-                        if(prevSensor1Val === ""){
-                            $("#sensor1").text("NO TRAIN IS AVAILABLE NEAR CROSSING GATE");
-                        }
-                        else{
-                            $("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
-                        }
-                    }, 60000);
-                });
-            }, 3000);
 
-  // Sensor 2 data retrieval
-setInterval(function(){
-    $.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){  
-        if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
-            if(prevSensor2Val === ""){
-                $("#sensor2").html("<mark>No train is available</mark>");
-            }
-            else{
-                $("#sensor2").html("<mark>The closing time of the crossing gate is: " + prevSensor2Val + "</mark>");
-            }
-        }
-        else{
-            var currVal = data.feeds[0].field3 + ":" + data.feeds[0].field4;
-            $("#sensor2").html("<mark>The closing time of the crossing gate is: " + currVal + "</mark>");
-            prevSensor2Val = currVal;
-        }
-        setTimeout(function(){
-            $("#sensor2").html("");
-        }, 60000);
-        setTimeout(function(){
-            if(prevSensor2Val === ""){
-                $("#sensor2").html("<mark>No train is available</mark>");
-            }
-            else{
-                $("#sensor2").html("<mark>The closing time of the crossing gate is: " + prevSensor2Val + "</mark>");
-            }
-        }, 60000);
-    });
-}, 3000);
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var prevSensor1Val = "";
+			var prevSensor2Val = "";
+			setTimeout(function() {
+				$('h1, h2, p').show();
+			}, 3000);
 
+			// Sensor 1 data retrieval
+			setInterval(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
+					if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
+						if(prevSensor1Val === ""){
+							$("#sensor1").text("No train is available");
+						}
+						else{
+							$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
+						}
+					}
+					else{
+						var currVal = data.feeds[0].field1 + ":" + data.feeds[0].field2;
+						$("#sensor1").text("The closing time of the crossing gate is: " + currVal);
+						prevSensor1Val = currVal;
+					}
+					setTimeout(function(){
+						$("#sensor1").text("");
+					}, 60000);
+					setTimeout(function(){
+						if(prevSensor1Val === ""){
+							$("#sensor1").text("NO TRAIN IS AVAILABLE NEAR CROSSING GATE");
+						}
+						else{
+							$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
+						}
+					}, 60000);
+				});
+			}, 3000);
+
+			// Sensor 2 data retrieval
+			setInterval(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
+					if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
+						if(prevSensor2Val === ""){
+							$("#sensor2").text("No train is available");
+						}
+						else{
+							$("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+						}
+					}
+					else{
+						var currVal = data.feeds[0].field3 + ":" + data.feeds[0].field4;
+                                                $("#sensor2").text("The closing time of the crossing gate is: " + currVal);
+                                                prevSensor2Val = currVal;
+                                         }
+                                         setTimeout(function(){
+                                                $("#sensor2").text("");
+                                          }, 60000);
+                                          setTimeout(function(){
+                                                 if(prevSensor2Val === ""){
+                                                         $("#sensor2").text("No train is available");
+                                                 }
+                                                 else{
+                                                      $("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+                                                 }
+                                         }, 60000);
+                                  });
+                          }, 3000);
                        });            
-        
+      
 	      </script>
               </body>
               </html>
