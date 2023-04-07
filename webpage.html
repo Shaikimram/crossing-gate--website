@@ -12,29 +12,21 @@
 			display: none;
 			text-align: center;
 			color: navy; 
-		} 
-	 .box {
-                 background-color: white;
-                 border: 1px solid black;
-                 padding: 10px;
-                 margin-bottom: 20px;
-               }
+		}
+		.sensor-data {
+			font-weight: bold;
+			color: red;
+		}
 	</style>
 </head>
 <body>
 	<h1>TIME STATUS INDICATING WEBSITE OF RAILWAY CROSSING GATES</h1>
-   
 
 	<h2>Madhura Nagar Crossing point</h2>
-     <div class="box">
-        <span id="sensor1"></span>
-     </div>
+	<p><span id="sensor1" class="sensor-data"></span></p>
 
 	<h2>Gunadala Crossing Point</h2>
-	 <div class="box">
-            <span id="sensor2"></span>
-         </div>
-
+	<p><span id="sensor2" class="sensor-data"></span></p>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
@@ -74,38 +66,43 @@
 					}, 60000);
 				});
 			}, 3000);
-
 			// Sensor 2 data retrieval
 			setInterval(function(){
-				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
-					if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
-						if(prevSensor2Val === ""){
-							$("#sensor2").text("No train is available");
-						}
-						else{
-							$("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
-						}
-					}
-					else{
-						var currVal = data.feeds[0].field3 + ":" + data.feeds[0].field4;
-                                                $("#sensor2").text("The closing time of the crossing gate is: " + currVal);
-                                                prevSensor2Val = currVal;
-                                         }
-                                         setTimeout(function(){
-                                                $("#sensor2").text("");
-                                          }, 60000);
-                                          setTimeout(function(){
-                                                 if(prevSensor2Val === ""){
-                                                         $("#sensor2").text("No train is available");
-                                                 }
-                                                 else{
-                                                      $("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
-                                                 }
-                                         }, 60000);
-                                  });
-                          }, 3000);
-                       });            
-      
-	      </script>
-              </body>
-              </html>
+	                        $.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
+		                        if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
+			                        if(prevSensor2Val === ""){
+				                        $("#sensor2").text("No train is available");
+			                 }
+			                 else{
+				              $("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+			                 }
+		                    }
+		                    else{
+			                    var currVal = data.feeds["[field3"] + ":" + data.feeds["[0]"]["field4"];
+			                    $("#sensor2").text("The closing time of the crossing gate is: " + currVal);
+			                    prevSensor2Val = currVal;
+		                    }
+		                    setTimeout(function(){
+			                    $("#sensor2").text("");
+		                    }, 60000);
+		                    setTimeout(function(){
+			                     if(prevSensor2Val === ""){
+				                       $("#sensor2").text("No train is available");
+			                     }
+			                     else{
+				                     $("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+			                     }
+		                     }, 60000);
+ 	                      });
+                      }, 3000);
+
+// CSS for highlighting sensor data
+                 #sensor1, #sensor2 {
+	                background-color: yellow;
+	                font-weight: bold;
+                  }
+
+                 });            
+       </script>
+          </body>
+          </html>
