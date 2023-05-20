@@ -59,87 +59,83 @@
 	<div class="box"><span class="data" id="sensor2"></span></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	$(document).ready(function(){
-		var prevSensor1Val = "";
-		var prevSensor2Val = "";
-		setTimeout(function() {
-			$('h1, h2').show();
-		}, 3000);
+	<script>
+		$(document).ready(function(){
+			var prevSensor1Val = "";
+			var prevSensor2Val = "";
+			setTimeout(function() {
+				$('h1, h2').show();
+			}, 3000);
 
-		// Sensor 1 data retrieval
-		setInterval(function(){
-			$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
-				if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
-					if(prevSensor1Val === ""){
-						$("#sensor1").text("No train is available");
-						$('.box').show();
+			// Sensor 1 data retrieval
+			setInterval(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){
+					if(data.feeds.length == 0 || data.feeds[0].field1 === null || data.feeds[0].field2 === null){
+						if(prevSensor1Val === ""){
+							$("#sensor1").text("No train is available");
+                                                        $('.box').show();
+						}
+						else{
+							$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
+                                                        $('.box').show();
+						}
 					}
 					else{
-						$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
-						$('.box').show();
+						var currVal = data.feeds[0].field1 + ":" + data.feeds[0].field2;
+						$("#sensor1").text("The closing time of the crossing gate is: " + currVal);
+                                                $('.box').show();
+						prevSensor1Val = currVal;
 					}
-				}
-				else{
-					var field1Val = parseInt(data.feeds[0].field1);
-					var field2Val = parseInt(data.feeds[0].field2);
-					var currVal = field1Val + ":" + field2Val;
-					$("#sensor1").text("The closing time of the crossing gate is: " + currVal);
-					$('.box').show();
-					prevSensor1Val = currVal;
-				}
-				setTimeout(function(){
-					$("#sensor1").text("");
-					$('.box').hide();
-				}, 60000);
-				setTimeout(function(){
-					if(prevSensor1Val === ""){
-						$("#sensor1").text("NO TRAIN IS AVAILABLE NEAR CROSSING GATE");
-						$('.box').show();
-					}
-					else{
-						$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
-						$('.box').show();
-					}
-				}, 60000);
-			});
-		}, 3000);
+					setTimeout(function(){
+						$("#sensor1").text("");
+                                                $('.box').hide();
+					}, 60000);
+					setTimeout(function(){
+						if(prevSensor1Val === ""){
+							$("#sensor1").text("NO TRAIN IS AVAILABLE NEAR CROSSING GATE");
+                                                        $('.box').show();
+						}
+						else{
+							$("#sensor1").text("The closing time of the crossing gate is: " + prevSensor1Val);
+                                                        $('.box').show();
+						}
+					}, 60000);
+				});
+			}, 3000);
 
-		// Sensor 2 data retrieval
-		setInterval(function(){
-			$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
-				if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
-					if(prevSensor2Val === ""){
-						$("#sensor2").text("No train is available");
-						$('.box').show();
+			// Sensor 2 data retrieval
+			setInterval(function(){
+				$.getJSON("https://api.thingspeak.com/channels/2058326/feeds.json?results=1", function(data){	
+					if(data.feeds.length == 0 || data.feeds[0].field3 === null || data.feeds[0].field4 === null){
+						if(prevSensor2Val === ""){
+							$("#sensor2").text("No train is available");
+                                                        $('.box').show();
+						}
+						else{
+							$("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+                                                        $('.box').show();
+						}
 					}
 					else{
-						$("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
-						$('.box').show();
-					}
-				}
-				else{
-					var field3Val = parseInt(data.feeds[0].field3);
-					var field4Val = parseInt(data.feeds[0].field4);
-					var currVal = field3Val + ":" + field4Val;
-					$("#sensor2").text("The closing time of the crossing gate is: " + currVal);
-					$('.box').show();
-					prevSensor2Val = currVal;
-				}
-				setTimeout(function(){
-					$("#sensor2").text("");
-					$('.box').hide();
-				}, 60000);
-				setTimeout(function(){
-					if(prevSensor2Val === ""){
-						$("#sensor2").text("No train is available");
-						$('.box').show();
-					}
-					else{
-						$("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
-						$('.box').show();
-					}
-				},60000);
+						var currVal = data.feeds[0].field3 + ":" + data.feeds[0].field4;
+                                                $("#sensor2").text("The closing time of the crossing gate is: " + currVal);
+                                                $('.box').show();
+                                               prevSensor2Val = currVal;
+                                         }
+                                         setTimeout(function(){
+                                                $("#sensor2").text("");
+                                                $('.box').hide();
+                                          }, 60000);
+                                          setTimeout(function(){
+                                                 if(prevSensor2Val === ""){
+                                                         $("#sensor2").text("No train is available");
+                                                         $('.box').show();
+                                                 }
+                                                 else{
+                                                      $("#sensor2").text("The closing time of the crossing gate is: " + prevSensor2Val);
+                                                      $('.box').show();
+                                                 }
+                                         }, 60000);
                                   });
                           }, 3000);
                        });            
@@ -147,3 +143,14 @@
 	      </script>
               </body>
               </html>
+		
+		
+			
+		
+	
+
+
+	
+	
+	
+	
